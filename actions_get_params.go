@@ -72,17 +72,6 @@ func GetQueryParam[T QueryParamType](attName string, defaultValue T) *chain.Acti
 				return
 			}
 			ctx.Additional[attName] = paramInt
-		case reflect.String:
-			if reflect.TypeOf(defaultValue) == reflect.TypeOf(uuid.UUID{}) {
-				uid, err := uuid.Parse(param)
-				if err != nil {
-					ctx.SetErr(err)
-					return
-				}
-				ctx.Additional[attName] = uid
-			} else {
-				ctx.Additional[attName] = param
-			}
 		default:
 			ctx.Additional[attName] = param
 		}
