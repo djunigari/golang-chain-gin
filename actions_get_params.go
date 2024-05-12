@@ -9,11 +9,11 @@ import (
 )
 
 type ParamType interface {
-	uint64 | string | uuid.UUID
+	uint64 | string
 }
 
 type QueryParamType interface {
-	int | uint64 | string | uuid.UUID
+	int | uint64 | string
 }
 
 func GetParam[T ParamType](attName string) *chain.Action[Context] {
