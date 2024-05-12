@@ -5,14 +5,15 @@ import (
 	"strconv"
 
 	chain "github.com/djunigari/golang-chain"
+	"github.com/google/uuid"
 )
 
 type ParamType interface {
-	uint64 | string
+	uint64 | string | uuid.UUID
 }
 
 type QueryParamType interface {
-	int | uint64 | string
+	int | uint64 | string | uuid.UUID
 }
 
 func GetParam[T ParamType](attName string) *chain.Action[Context] {
@@ -29,6 +30,17 @@ func GetParam[T ParamType](attName string) *chain.Action[Context] {
 			}
 
 			ctx.Additional[attName] = paramUint
+		case reflect.String:
+			if reflect.TypeOf(x) == reflect.TypeOf(uuid.UUID{}) {
+				uid, err := uuid.Parse(param)
+				if err != nil {
+					ctx.SetErr(err)
+					return
+				}
+				ctx.Additional[attName] = uid
+			} else {
+				ctx.Additional[attName] = param
+			}
 		default:
 			ctx.Additional[attName] = param
 		}
@@ -60,6 +72,17 @@ func GetQueryParam[T QueryParamType](attName string, defaultValue T) *chain.Acti
 				return
 			}
 			ctx.Additional[attName] = paramInt
+		case reflect.String:
+			if reflect.TypeOf(defaultValue) == reflect.TypeOf(uuid.UUID{}) {
+				uid, err := uuid.Parse(param)
+				if err != nil {
+					ctx.SetErr(err)
+					return
+				}
+				ctx.Additional[attName] = uid
+			} else {
+				ctx.Additional[attName] = param
+			}
 		default:
 			ctx.Additional[attName] = param
 		}
