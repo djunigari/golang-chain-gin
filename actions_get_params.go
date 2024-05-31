@@ -93,3 +93,21 @@ func GetQueryParamFilters(queryParams ...string) *chain.Action[Context] {
 	}
 	return chain.NewAction[Context]("chains.GetQueryParam").Function(f)
 }
+
+func GetQueryParamArray(attName string) *chain.Action[Context] {
+	return chain.NewAction[Context]("chains.GetQueryParamArray").
+		Function(func(ctx *chain.Context[Context]) {
+			values, exists := ctx.Extra.C.GetQueryArray(attName)
+			if exists {
+				ctx.Additional[attName] = values
+				return
+			}
+			value := ctx.Extra.C.Query(attName)
+			if value != "" {
+				ctx.Additional[attName] = []string{value}
+				return
+			}
+
+			ctx.Additional[attName] = []string{}
+		})
+}

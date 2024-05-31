@@ -7,8 +7,8 @@ github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311/go.mod h1:b583j
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/djunigari/golang-chain v1.0.13 h1:LZU+lERYoqpU0VhLqkdbnHNOEcnM/sojeR5+p32/LD4=
-github.com/djunigari/golang-chain v1.0.13/go.mod h1:IS3wIZwDlkeYn8P+yVozzh4nUZMPtr+l98Fku/Vtups=
+github.com/djunigari/golang-chain v1.0.14 h1:3kW2CUpA4pKg1enjlac1MSOb1wODRGh4NBTTNcWavx8=
+github.com/djunigari/golang-chain v1.0.14/go.mod h1:IS3wIZwDlkeYn8P+yVozzh4nUZMPtr+l98Fku/Vtups=
 github.com/djunigari/golang-logger v0.0.1 h1:dvIdqDsZCFC3+zEmMKtn5l6xwKcmcGUJOM06fZijoIs=
 github.com/djunigari/golang-logger v0.0.1/go.mod h1:yCdDLVzlUutx+ewqTH33lCjkzWLnzTS2T3MpyiKLSY0=
 github.com/fatih/color v1.16.0 h1:zmkK9Ngbjj+K0yRhTVONQh1p/HknKYSlNT+vZCzyokM=
