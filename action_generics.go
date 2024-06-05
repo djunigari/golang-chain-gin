@@ -42,5 +42,5 @@ func Get[FROM any](from, attribute, attName string) *chain.Action[Context] {
 		}
 		ctx.Additional[attName] = fieldValue.Interface()
 	}
-	return chain.NewAction[Context]("chains.ConvertJsonTo").Function(f)
+	return chain.NewAction[Context]("chains.Get").Function(f)
 }

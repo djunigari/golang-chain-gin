@@ -8,92 +8,90 @@ import (
 	logger "github.com/djunigari/golang-logger"
 )
 
-func logMethodName(errorMessage, errorDetails string, ctx *chain.Context[Context]) {
+func logMethodName(errorMessage string, ctx *chain.Context[Context]) {
 	if ctx.Err() != nil {
+		var errorDetails string
 		if ctx.ActionErr != nil {
-			logger.LogError(errorMessage, ctx.ActionErr.Name+":"+errorDetails)
+			errorDetails = fmt.Sprintf("[%s] %s : %s", ctx.ActionErr.Name, ctx.Err(), ctx.ErrMsg())
 		} else {
-			logger.LogError(errorMessage, errorDetails)
+			errorDetails = fmt.Sprintf("%s : %s", ctx.Err(), ctx.ErrMsg())
 		}
+		logger.LogError(errorMessage, errorDetails)
 	}
 }
 
 func LogGet(entityType string) *chain.Action[Context] {
-	var f chain.ActionFunc[Context] = func(ctx *chain.Context[Context]) {
-		if ctx.Err() != nil {
-			logMethodName("failed to get "+entityType, ctx.Err().Error(), ctx)
-		}
-	}
-	return chain.NewAction[Context]("chains.LogGet").Function(f).IgnoreError(true)
+	return chain.NewAction[Context]("chains.LogGet").
+		IgnoreError(true).
+		Function(func(ctx *chain.Context[Context]) {
+			if ctx.Err() != nil {
+				logMethodName("failed to get "+entityType, ctx)
+			}
+		})
 }
 
 func LogGetList(entityType string) *chain.Action[Context] {
-	var f chain.ActionFunc[Context] = func(ctx *chain.Context[Context]) {
-		if ctx.Err() != nil {
-			logMethodName("failed to get list of "+entityType, ctx.Err().Error(), ctx)
-		}
-	}
-	return chain.NewAction[Context]("chains.LogGetList").Function(f).IgnoreError(true)
+	return chain.NewAction[Context]("chains.LogGetList").
+		IgnoreError(true).
+		Function(func(ctx *chain.Context[Context]) {
+			if ctx.Err() != nil {
+				logMethodName("failed to get list of "+entityType, ctx)
+			}
+		})
 }
 
 func LogCreate[T any](attName string) *chain.Action[Context] {
 	structName := typeOf[T]()
 	entityName := structName.Name()
-
-	var f chain.ActionFunc[Context] = func(ctx *chain.Context[Context]) {
-		if ctx.Err() != nil {
-			logMethodName("failed to create "+entityName, ctx.Err().Error(), ctx)
-			return
-		}
-		obj, ok := ctx.Additional[attName].(*T)
-		if !ok {
-			ctx.SetErr(chain.ErrInvalidVariableType)
-			return
-		}
-
-		logger.LogCreatedSuccess(entityName, obj)
-	}
-	return chain.NewAction[Context]("chains.LogCreate").Function(f).IgnoreError(true)
+	return chain.NewAction[Context]("chains.LogCreate").
+		IgnoreError(true).
+		Function(func(ctx *chain.Context[Context]) {
+			if ctx.Err() == nil {
+				if obj, ok := ctx.Additional[attName].(*T); ok {
+					logger.LogCreatedSuccess(entityName, obj)
+					return
+				}
+				ctx.SetErr(chain.ErrInvalidVariableType)
+			}
+			logMethodName("failed to create "+entityName, ctx)
+		})
 }
 
 func LogUpdate[T any](attName string) *chain.Action[Context] {
 	structName := typeOf[T]()
 	entityName := structName.Name()
+	return chain.NewAction[Context]("chains.LogUpdate").
+		IgnoreError(true).
+		Function(func(ctx *chain.Context[Context]) {
+			if ctx.Err() == nil {
+				if obj, ok := ctx.Additional[attName].(*T); ok {
+					logger.LogUpdatedSuccess(entityName, obj)
+					return
+				}
+				ctx.SetErr(chain.ErrInvalidVariableType)
+			}
 
-	var f chain.ActionFunc[Context] = func(ctx *chain.Context[Context]) {
-		if ctx.Err() != nil {
-			logMethodName("failed to update "+entityName, ctx.Err().Error(), ctx)
-			return
-		}
+			logMethodName("failed to update "+entityName, ctx)
 
-		obj, ok := ctx.Additional[attName].(*T)
-		if !ok {
-			ctx.SetErr(chain.ErrInvalidVariableType)
-			return
-		}
-		logger.LogUpdatedSuccess(entityName, obj)
-	}
-	return chain.NewAction[Context]("chains.LogUpdate").Function(f).IgnoreError(true)
+		})
 }
 
 func LogDelete[T, idType any](attName string) *chain.Action[Context] {
 	structName := typeOf[T]()
 	entityName := structName.Name()
+	return chain.NewAction[Context]("chains.LogDelete").
+		IgnoreError(true).
+		Function(func(ctx *chain.Context[Context]) {
+			if ctx.Err() == nil {
+				if id, ok := ctx.Additional[attName].(idType); ok {
+					logger.LogDeletedSuccess(entityName, fmt.Sprintf("id=%v", id))
+					return
+				}
+				ctx.SetErr(chain.ErrInvalidVariableType)
+			}
 
-	var f chain.ActionFunc[Context] = func(ctx *chain.Context[Context]) {
-		if ctx.Err() != nil {
-			logMethodName("failed to delete "+entityName, ctx.Err().Error(), ctx)
-			return
-		}
-
-		id, ok := ctx.Additional[attName].(idType)
-		if !ok {
-			ctx.SetErr(chain.ErrInvalidVariableType)
-			return
-		}
-		logger.LogDeletedSuccess(entityName, fmt.Sprintf("id=%v", id))
-	}
-	return chain.NewAction[Context]("chains.LogDelete").Function(f).IgnoreError(true)
+			logMethodName("failed to delete "+entityName, ctx)
+		})
 }
 
 func typeOf[T any]() reflect.Type {
