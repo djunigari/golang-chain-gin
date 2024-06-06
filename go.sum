@@ -17,6 +17,8 @@ github.com/djunigari/golang-chain v1.0.18 h1:iQEzIkWWB9rWrIloCAwOzPM2Mr9BtGVUXQA
 github.com/djunigari/golang-chain v1.0.18/go.mod h1:IS3wIZwDlkeYn8P+yVozzh4nUZMPtr+l98Fku/Vtups=
 github.com/djunigari/golang-chain v1.0.19 h1:6XFKMkw5AIN474DF2e0QLzzz3rRWJPO+2pCKwX2o/PE=
 github.com/djunigari/golang-chain v1.0.19/go.mod h1:UX0w+YoJQx9m/lvi33sjXUJ4e6ksdyOCR0wSxjZL+ME=
+github.com/djunigari/golang-chain v1.0.20 h1:cKm9y8JoMI/MR8OQQA+4YYODM4FyLBe3IcqAVfz9LZA=
+github.com/djunigari/golang-chain v1.0.20/go.mod h1:UX0w+YoJQx9m/lvi33sjXUJ4e6ksdyOCR0wSxjZL+ME=
 github.com/djunigari/golang-logger v0.0.1 h1:dvIdqDsZCFC3+zEmMKtn5l6xwKcmcGUJOM06fZijoIs=
 github.com/djunigari/golang-logger v0.0.1/go.mod h1:yCdDLVzlUutx+ewqTH33lCjkzWLnzTS2T3MpyiKLSY0=
 github.com/fatih/color v1.16.0 h1:zmkK9Ngbjj+K0yRhTVONQh1p/HknKYSlNT+vZCzyokM=
