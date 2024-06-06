@@ -8,28 +8,6 @@ import (
 	logger "github.com/djunigari/golang-logger"
 )
 
-func logMethodName(errorMessage string, ctx *chain.Context[Context]) {
-	if ctx.Err() != nil {
-		var errorDetails string
-		if ctx.ActionErr != nil {
-			errorDetails = fmt.Sprintf("[%s] %s : %s", ctx.ActionErr.Name, ctx.Err(), ctx.ErrMsg())
-		} else {
-			errorDetails = fmt.Sprintf("%s : %s", ctx.Err(), ctx.ErrMsg())
-		}
-		logger.LogError(errorMessage, errorDetails)
-	}
-}
-
-func LogError(entityType string, handlerName string) *chain.Action[Context] {
-	return chain.NewAction[Context]("chains.LogError").
-		IgnoreError(true).
-		Function(func(ctx *chain.Context[Context]) {
-			if ctx.Err() != nil {
-				logMethodName("failed "+handlerName, ctx)
-			}
-		})
-}
-
 // func LogGet(entityType string, handlerName string) *chain.Action[Context] {
 // 	return chain.NewAction[Context]("chains.LogGet").
 // 		Function(func(ctx *chain.Context[Context]) {
