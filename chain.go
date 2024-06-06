@@ -26,7 +26,7 @@ type Context struct {
 }
 
 type ChainExecutor struct {
-	Name    string
+	name    string
 	actions *chain.Actions[Context]
 
 	// chain *chain.Processor[Context]
@@ -34,7 +34,7 @@ type ChainExecutor struct {
 
 func NewChain(name string) *ChainExecutor {
 	return &ChainExecutor{
-		Name:    name,
+		name:    name,
 		actions: nil,
 	}
 }
@@ -45,7 +45,7 @@ func (e *ChainExecutor) Actions(actions ...*chain.Action[Context]) *ChainExecuto
 }
 
 func (e ChainExecutor) Run(ctx *gin.Context) {
-	chain.New(e.Name, e.actions, printLog).Run(
+	chain.New(e.name, e.actions, printLog).Run(
 		&Context{
 			C: ctx,
 		},
