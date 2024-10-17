@@ -1,6 +1,7 @@
 package chains
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 
@@ -26,26 +27,38 @@ type Context struct {
 }
 
 type ChainExecutor struct {
-	name    string
-	actions *chain.Actions[Context]
-
-	// chain *chain.Processor[Context]
+	name      string
+	processor *chain.Processor[Context]
 }
 
 func NewChain(name string) *ChainExecutor {
+	processor := chain.New[Context](name, &chain.Actions[Context]{}, printLog)
 	return &ChainExecutor{
-		name:    name,
-		actions: nil,
+		name:      name,
+		processor: processor,
 	}
 }
 
-func (e *ChainExecutor) Actions(actions ...*chain.Action[Context]) *ChainExecutor {
-	e.actions = (*chain.Actions[Context])(&actions)
+func (e *ChainExecutor) Actions(actions ...interface{}) *ChainExecutor {
+	if e.processor.Actions == nil {
+		e.processor.Actions = &chain.Actions[Context]{}
+	}
+
+	for _, action := range actions {
+		switch a := action.(type) {
+		case *chain.Action[Context]:
+			e.processor.AddAction(a)
+		case *chain.Actions[Context]:
+			e.processor.AddActions(a)
+		default:
+			fmt.Println("Type unknown")
+		}
+	}
 	return e
 }
 
 func (e ChainExecutor) Run(ctx *gin.Context) {
-	chain.New(e.name, e.actions, printLog).Run(
+	e.processor.Run(
 		&Context{
 			C: ctx,
 		},
