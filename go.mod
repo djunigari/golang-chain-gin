@@ -3,8 +3,8 @@ module github.com/djunigari/golang-chain-gin
 go 1.22.1
 
 require (
-	github.com/djunigari/golang-chain v1.0.24
-	github.com/djunigari/golang-logger v1.0.22
+	github.com/djunigari/golang-chain v1.0.25
+	github.com/djunigari/golang-logger v1.1.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/google/uuid v1.6.0
 	gorm.io/gorm v1.25.10
