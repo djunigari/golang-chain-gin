@@ -15,6 +15,8 @@ github.com/djunigari/golang-chain v1.0.25 h1:rLMx+vPFqMvsqMzRqcmlJ2+nv/J6VSHin7L
 github.com/djunigari/golang-chain v1.0.25/go.mod h1:tVK6Vg8t0LhfgBLKDCydhInk1RYk01hD98doVScWQxg=
 github.com/djunigari/golang-chain v1.0.26 h1:kDwrGhnih/tY99XJ4+QGmx5teFZrlcvxs1gZEgJn8uM=
 github.com/djunigari/golang-chain v1.0.26/go.mod h1:i4DqE54IYI1zK5xtTzE1UGCyQnSu/aMZ10A7v/kNJqM=
+github.com/djunigari/golang-chain v1.0.27 h1:/ee71evL3QYGE6oYrnP9P05rpR6XC6nXo4a9EMH5cQY=
+github.com/djunigari/golang-chain v1.0.27/go.mod h1:i4DqE54IYI1zK5xtTzE1UGCyQnSu/aMZ10A7v/kNJqM=
 github.com/djunigari/golang-logger v0.0.1 h1:dvIdqDsZCFC3+zEmMKtn5l6xwKcmcGUJOM06fZijoIs=
 github.com/djunigari/golang-logger v0.0.1/go.mod h1:yCdDLVzlUutx+ewqTH33lCjkzWLnzTS2T3MpyiKLSY0=
 github.com/djunigari/golang-logger v1.0.22 h1:kE3eec57lTAlFBONC7OZNsDHOwmDkzjU3Ow8tjNLObQ=
