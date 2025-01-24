@@ -44,3 +44,10 @@ func Get[FROM any](from, attribute, attName string) *chain.Action[Context] {
 	}
 	return chain.NewAction[Context]("chains.Get").Function(f)
 }
+
+func RenameAdditionalKey(from, to string) *chain.Action[Context] {
+	var f chain.ActionFunc[Context] = func(ctx *chain.Context[Context]) {
+		ctx.RenameAdditionalKey(from, to)
+	}
+	return chain.NewAction[Context]("chains.RenameAdditionalKey").Function(f)
+}
